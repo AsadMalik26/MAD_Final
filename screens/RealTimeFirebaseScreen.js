@@ -5,6 +5,7 @@ import { db, rtdb } from "../firebase.config";
 
 export default function RealTimeFirebaseScreen({ navigation }) {
   const [data, setData] = useState("")
+  const [dataArray, setDataArray] = useState([])
   const getData = () => {
     console.log("Get Data - TODO");
     db.collection("mad-final")
@@ -30,12 +31,13 @@ export default function RealTimeFirebaseScreen({ navigation }) {
 
     dbref.on("value", (snapshot) => {
       console.log("Data Got ", typeof (snapshot))
+      setDataArray(snapshot.val())
       // console.table(snapshot)
-      snapshot.forEach((doc) => {
-        // console.log(typeof doc)
-        console.log(doc);  // Returns: false)
-        // console.log(doc.id, doc.AyahNumber, doc.SurahNumber, doc.TafseerName)
-      })
+      // snapshot.forEach((doc) => {
+      //   // console.log(typeof doc)
+      //   console.log(doc);  // Returns: false)
+      //   // console.log(doc.id, doc.AyahNumber, doc.SurahNumber, doc.TafseerName)
+      // })
     })
   }
   const getOneRT = () => {
@@ -57,6 +59,9 @@ export default function RealTimeFirebaseScreen({ navigation }) {
   useEffect(() => {
     console.log("Data=> ", data.AyahNumber)
   }, [data])
+  useEffect(() => {
+    console.log("Data Array=> ", dataArray[5])
+  }, [dataArray])
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Realtime Firebase - check console</Text>
