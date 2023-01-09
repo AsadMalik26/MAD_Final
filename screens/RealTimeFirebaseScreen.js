@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Button } from "react-native";
 import { Text, View } from "../components/Themed";
 import { db, rtdb } from "../firebase.config";
 
 export default function RealTimeFirebaseScreen({ navigation }) {
+  const [data, setData] = useState("")
   const getData = () => {
     console.log("Get Data - TODO");
     db.collection("mad-final")
@@ -26,16 +27,36 @@ export default function RealTimeFirebaseScreen({ navigation }) {
   const getRT = () => {
     console.log("Get Data - RTDB\n")
     var dbref = rtdb.ref();
-    dbref.on('value', (snapshot) => {
-      const data = snapshot.val();
-      console.log("=====> ", data)
-      // updateStarCount(postElement, data);
-    });
+
+    dbref.on("value", (snapshot) => {
+      console.log("Data Got ", typeof (snapshot))
+      // console.table(snapshot)
+      snapshot.forEach((doc) => {
+        // console.log(typeof doc)
+        console.log(doc);  // Returns: false)
+        // console.log(doc.id, doc.AyahNumber, doc.SurahNumber, doc.TafseerName)
+      })
+    })
+  }
+  const getOneRT = () => {
+    console.log("Get One Data - RTDB\n")
+    var dbref = rtdb.ref("1");
+
+    dbref.on("value", (snapshot) => {
+      // console.log("Data Got ", typeof (snapshot), Array.isArray(snapshot))
+      // console.log("snapshot => ", snapshot)
+      let val = snapshot.val()
+      setData(val)
+    })
   }
   useEffect(() => {
     // getData();
     getRT()
+    // getOneRT()
   }, []);
+  useEffect(() => {
+    console.log("Data=> ", data.AyahNumber)
+  }, [data])
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Realtime Firebase - check console</Text>
