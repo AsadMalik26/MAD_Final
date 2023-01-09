@@ -31,6 +31,7 @@ export default function RealTimeFirebaseScreen({ navigation }) {
 
     dbref.on("value", (snapshot) => {
       console.log("Data Got ", typeof (snapshot))
+      console.log("=>", snapshot)
       setDataArray(snapshot.val())
       // console.table(snapshot)
       // snapshot.forEach((doc) => {
@@ -43,24 +44,43 @@ export default function RealTimeFirebaseScreen({ navigation }) {
   const getOneRT = () => {
     console.log("Get One Data - RTDB\n")
     var dbref = rtdb.ref("1");
+    // var dbref = rtdb.ref("/Quran/10");
 
     dbref.on("value", (snapshot) => {
       // console.log("Data Got ", typeof (snapshot), Array.isArray(snapshot))
       // console.log("snapshot => ", snapshot)
       let val = snapshot.val()
+      console.log(val)
       setData(val)
     })
   }
+
+  const writeTest = () => {
+    rtdb.ref('users/').set({
+      username: "Asad",
+      email: "Asad@gmail.com"
+    }).then((res) => { console.log("Data write done ? ", res) }).catch((error) => { console.log("Data write error ? ", error) })
+  }
+  const deleteTest = () => {
+    // rtdb.ref('users/').remove().then((res) => { console.log("Data deleteTest done ? ", res) }).catch((error) => { console.log("Data deleteTest error ? ", error) })
+    rtdb.ref().remove().then((res) => { console.log("Data deleteTest done ? ", res) }).catch((error) => { console.log("Data deleteTest error ? ", error) })
+    // set({
+    //   username: "Asad",
+    //   email: "Asad@gmail.com"
+    // }).then((res) => { console.log("Data write done ? ", res) }).catch((error) => { console.log("Data write error ? ", error) })
+  }
   useEffect(() => {
     // getData();
-    getRT()
+    // getRT()
+    // writeTest()
     // getOneRT()
+    // deleteTest()
   }, []);
   useEffect(() => {
-    console.log("Data=> ", data.AyahNumber)
+    // console.log("Data=> ", data.AyahNumber)
   }, [data])
   useEffect(() => {
-    console.log("Data Array=> ", dataArray[5])
+    // console.log("Data Array=> ", dataArray[5])
   }, [dataArray])
   return (
     <View style={styles.container}>
