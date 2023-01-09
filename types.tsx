@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   FirebaseScreen: undefined;
+  RealTimeFirebaseScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -30,6 +31,7 @@ export type RootTabParamList = {
   TabOne: undefined;
   TabTwo: undefined;
   FirebaseScreen: undefined;
+  RealTimeFirebaseScreen: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

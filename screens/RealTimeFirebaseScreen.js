@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Button } from "react-native";
 import { Text, View } from "../components/Themed";
-import { db } from "../firebase.config";
+import { db, rtdb } from "../firebase.config";
 
-export default function FirebaseScreen({ navigation }) {
+export default function RealTimeFirebaseScreen({ navigation }) {
   const getData = () => {
     console.log("Get Data - TODO");
     db.collection("mad-final")
@@ -23,18 +23,28 @@ export default function FirebaseScreen({ navigation }) {
         console.log("Error Get Data - TODO => ", error.message);
       });
   };
+  const getRT = () => {
+    console.log("Get Data - RTDB\n")
+    var dbref = rtdb.ref();
+    dbref.on('value', (snapshot) => {
+      const data = snapshot.val();
+      console.log("=====> ", data)
+      // updateStarCount(postElement, data);
+    });
+  }
   useEffect(() => {
-    getData();
+    // getData();
+    getRT()
   }, []);
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>FirebaseScreen - check console</Text>
+      <Text style={styles.title}>Realtime Firebase - check console</Text>
       <View
         style={styles.separator}
         lightColor="#eee"
         darkColor="rgba(255,255,255,0.1)"
       />
-      <Button onPress={() => navigation.navigate("RealTimeFirebaseScreen")} title={"Goto Realtime Firebase Screen"} />
+      <Button onPress={() => navigation.navigate("FirebaseScreen")} title={"Goto Firestore Screen"} />
       <View
         style={styles.separator}
         lightColor="#eee"

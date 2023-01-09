@@ -27,6 +27,7 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import RealTimeFirebaseScreen from "../screens/RealTimeFirebaseScreen";
 
 export default function Navigation({
   colorScheme,
@@ -57,6 +58,11 @@ function RootNavigator() {
         name="FirebaseScreen"
         component={FirebaseScreen}
         options={{ title: "firebase Screen!" }}
+      />
+      <Stack.Screen
+        name="RealTimeFirebaseScreen"
+        component={RealTimeFirebaseScreen}
+        options={{ title: "Realtime firebase Screen!" }}
       />
       <Stack.Screen
         name="NotFound"
