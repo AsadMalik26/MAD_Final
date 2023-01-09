@@ -56,10 +56,26 @@ export default function RealTimeFirebaseScreen({ navigation }) {
   }
 
   const writeTest = () => {
-    rtdb.ref('users/').set({
-      username: "Asad",
-      email: "Asad@gmail.com"
+    console.log("Writing user")
+    rtdb.ref('users/1').set({
+      username: "Asad1",
+      email: "Asad1@gmail.com"
     }).then((res) => { console.log("Data write done ? ", res) }).catch((error) => { console.log("Data write error ? ", error) })
+  }
+  const updateTest = () => {
+    rtdb.ref('users/1').set({
+      username: "Asad01",
+      email: "Asad1@gmail.com"
+    }).then((res) => { console.log("Data write done ? ", res) }).catch((error) => { console.log("Data write error ? ", error) })
+  }
+  const updateTest2 = () => {
+    rtdb.ref('users/').equalTo("Asad01", "name").once("value", querySnapshot => {
+      console.log("Test 2 => ", querySnapshot.val())
+    })
+    // set({
+    //   username: "Asad01",
+    //   email: "Asad1@gmail.com"
+    // }).then((res) => { console.log("Data write done ? ", res) }).catch((error) => { console.log("Data write error ? ", error) })
   }
   const deleteTest = () => {
     // rtdb.ref('users/').remove().then((res) => { console.log("Data deleteTest done ? ", res) }).catch((error) => { console.log("Data deleteTest error ? ", error) })
@@ -73,6 +89,8 @@ export default function RealTimeFirebaseScreen({ navigation }) {
     // getData();
     // getRT()
     // writeTest()
+    // updateTest()
+    updateTest2()
     // getOneRT()
     // deleteTest()
   }, []);
